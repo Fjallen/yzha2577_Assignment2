@@ -3,7 +3,11 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Pick Up
+  - Pick Up1
+  - Pick Up2
+  - Pick Up3
   layers:
   - Default
   - TransparentFX
