@@ -6,35 +6,26 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     public Text scoreText;
-    private float _playerSpd = 0.1f;
+    private float _playerSpd = 10f;
     private int _score;
+    private Rigidbody rb;
     public Text wonText;
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody>();
         SetScore();
         wonText.text = "";
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        Vector3 move = Vector3.zero;
-        if (Input.GetKey(KeyCode.W)){
-            move += Vector3.forward;
-        }
-        if (Input.GetKey(KeyCode.A)) { 
-            move += Vector3.left;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            move += Vector3.back;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            move += Vector3.right;
-        }
-        gameObject.transform.position = move * _playerSpd + gameObject.transform.position;
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+        Vector3 movement = new Vector3(moveHorizontal, 0.0f, moveVertical);
+        rb.AddForce(movement * _playerSpd);
+
     }
     void OnTriggerEnter(Collider other)
     {
@@ -59,10 +50,11 @@ public class PlayerController : MonoBehaviour
             _score += 40;
         }
         SetScore();
-        if (_score == 150)
+        if (_score == 170)
         {
             wonText.text = "Congratulations! Winner!";
         }
+        
     }
     void SetScore()
     {
